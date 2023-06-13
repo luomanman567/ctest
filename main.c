@@ -127,12 +127,6 @@ buf_copy(uint8_t *buf, uint32_t buf_size, uint8_t *src, uint8_t len, uint32_t in
     return (in + len) % buf_size;
 }
 
-void
-test_buf_copy(void)
-{
-
-}
-
 
 uint8_t 
 checksum(const uint8_t *buf, uint32_t buf_size, uint32_t out) {
