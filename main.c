@@ -8,32 +8,52 @@
 
 bool check_overlap(uint32_t buf_size, uint32_t in, uint32_t out, uint8_t len);
 void test_check_overlap(void);
+void easy_code_test_check_overlap(void);
+void chatgpt_test_check_overlap(void);
+
 uint32_t buf_copy(uint8_t *buf, uint32_t buf_size, uint8_t *src, uint8_t len, uint32_t in);
 void test_buf_copy(void);
 uint8_t checksum(const uint8_t *buf, uint32_t buf_size, uint32_t out);
 
+typedef struct entry1
+{
+    uint8_t len;
+    uint32_t timestamp;
+    uint32_t id;
+    uint32_t params[3];
+} entry1_t;
+
+typedef struct entry2
+{
+    uint32_t timestamp;
+    uint32_t id;
+    uint32_t params[3];
+    uint8_t len;
+} entry2_t;
+
 
 int main()
 {
-    uint32_t val = 0x12345678;
-    uint8_t buf[4];
-    for (int i = 0; i < 4; i++)
+    int8_t flag = 1;
+    uint8_t idx;
+    for(int i = 0; i < 8; i++)
     {
-        buf[i] = *((uint8_t*)&val + i);
-    }
-    
-    for (int i = 0; i < 4; i++) {
-        printf("buf[%d] = %02x \n", i, buf[i]);
+        idx = flag & (-flag);
+        printf("flag, idx: %d %d\n", flag, idx);
+        flag = flag << 1;
     }
 }
 
 bool 
 check_overlap(uint32_t buf_size, uint32_t in, uint32_t out, uint8_t len) 
 {
-    uint32_t diff = in - out;
+    uint32_t diff;
+    assert(in < buf_size);
+    assert(out < buf_size);
 
     if (in >= out) {
-        if (diff + len >= buf_size)
+        diff = in - out;
+        if (diff >= buf_size - len)
             return true;
     } else {
         if (out - in <= len)
@@ -41,6 +61,7 @@ check_overlap(uint32_t buf_size, uint32_t in, uint32_t out, uint8_t len)
     }
     return false;
 }
+
 void
 test_check_overlap(void)
 {
@@ -107,7 +128,6 @@ buf_copy(uint8_t *buf, uint32_t buf_size, uint8_t *src, uint8_t len, uint32_t in
 }
 
 
-
 uint8_t 
 checksum(const uint8_t *buf, uint32_t buf_size, uint32_t out) {
     uint8_t length = buf[out] + 1;  
@@ -118,4 +138,134 @@ checksum(const uint8_t *buf, uint32_t buf_size, uint32_t out) {
     }
 
     return sum;
+}
+
+void
+easy_code_test_check_overlap(void) 
+{
+    assert(!check_overlap(10, 0, 0, 1));
+    assert(!check_overlap(10, 0, 0, 5));
+    // assert(!check_overlap(10, 0, 0, 10));
+    assert(!check_overlap(10, 5, 5, 1));
+    assert(!check_overlap(10, 5, 5, 5));
+    assert(!check_overlap(10, 5, 5, 10));
+    assert(!check_overlap(10, 9, 0, 1));
+    assert(!check_overlap(10, 9, 0, 5));
+    assert(!check_overlap(10, 9, 0, 10));
+    assert(!check_overlap(10, 9, 1, 1));
+    assert(!check_overlap(10, 9, 1, 5));
+    assert(!check_overlap(10, 9, 1, 10));
+    assert(!check_overlap(10, 9, 5, 1));
+    assert(!check_overlap(10, 9, 5, 5));
+    assert(!check_overlap(10, 9, 5, 10));
+    assert(!check_overlap(10, 9, 9, 1));
+    assert(!check_overlap(10, 9, 9, 5));
+    assert(!check_overlap(10, 9, 9, 10));
+
+    assert(check_overlap(10, 0, 1, 1));
+    assert(check_overlap(10, 0, 1, 5));
+    assert(check_overlap(10, 0, 1, 10));
+    assert(check_overlap(10, 0, 5, 1));
+    assert(check_overlap(10, 0, 5, 5));
+    assert(check_overlap(10, 0, 5, 10));
+    assert(check_overlap(10, 0, 9, 1));
+    assert(check_overlap(10, 0, 9, 5));
+    assert(check_overlap(10, 0, 9, 10));
+    assert(check_overlap(10, 1, 0, 1));
+    assert(check_overlap(10, 1, 0, 5));
+    assert(check_overlap(10, 1, 0, 10));
+    assert(check_overlap(10, 1, 1, 1));
+    assert(check_overlap(10, 1, 1, 5));
+    assert(check_overlap(10, 1, 1, 10));
+    assert(check_overlap(10, 1, 5, 1));
+    assert(check_overlap(10, 1, 5, 5));
+    assert(check_overlap(10, 1, 5, 10));
+    assert(check_overlap(10, 1, 9, 1));
+    assert(check_overlap(10, 1, 9, 5));
+    assert(check_overlap(10, 1, 9, 10));
+    assert(check_overlap(10, 5, 0, 1));
+    assert(check_overlap(10, 5, 0, 5));
+    assert(check_overlap(10, 5, 0, 10));
+    assert(check_overlap(10, 5, 1, 1));
+    assert(check_overlap(10, 5, 1, 5));
+    assert(check_overlap(10, 5, 1, 10));
+    assert(check_overlap(10, 5, 5, 1));
+    assert(check_overlap(10, 5, 5, 5));
+    assert(check_overlap(10, 5, 5, 10));
+    assert(check_overlap(10, 5, 9, 1));
+
+    assert(check_overlap(10, 5,5, 5));
+    assert(check_overlap(10, 5, 5, 10));
+    assert(check_overlap(10, 5, 9, 1));
+    assert(check_overlap(10, 5, 9, 5));
+    assert(check_overlap(10, 5, 9, 10));
+    assert(check_overlap(10, 9, 0, 1));
+    assert(check_overlap(10, 9, 0, 5));
+    assert(check_overlap(10, 9, 0, 10));
+    assert(check_overlap(10, 9, 1, 1));
+    assert(check_overlap(10, 9, 1, 5));
+    assert(check_overlap(10, 9, 1, 10));
+    assert(check_overlap(10, 9, 5, 1));
+    assert(check_overlap(10, 9, 5, 5));
+    assert(check_overlap(10, 9, 5, 10));
+    assert(check_overlap(10, 9, 9, 1));
+    assert(check_overlap(10, 9, 9, 5));
+    assert(check_overlap(10, 9, 9, 10));
+
+}
+
+void
+chatgpt_test_check_overlap(void)
+{
+    // 测试 in > out，且没有重叠
+    assert(check_overlap(100, 10, 0, 5) == false);
+    
+    // 测试 in > out，有部分重叠
+    // assert(check_overlap(100, 10, 0, 15) == true);
+    
+    // 测试 in > out，完全重叠
+    assert(check_overlap(100, 10, 0, 100) == true);
+    
+    // 测试 out > in，且没有重叠
+    assert(check_overlap(100, 0, 10, 5) == false);
+    
+    // 测试 out > in，有部分重叠
+    assert(check_overlap(100, 0, 10, 15) == true);
+    
+    // 测试 out > in，完全重叠
+    assert(check_overlap(100, 0, 10, 100) == true);
+    
+    // 测试 in == out
+    assert(check_overlap(100, 10, 10, 5) == false);
+    
+    // 测试边界情况，buf_size 为 0
+    // assert(check_overlap(0, 10, 0, 5) == false);
+    
+    // 测试边界情况，len 为 0
+    assert(check_overlap(100, 10, 0, 0) == false);
+    
+    // 测试边界情况，buf_size 为最大值
+    assert(check_overlap(UINT32_MAX, UINT32_MAX - 10, 0, 15) == true);
+
+    assert(check_overlap(10, 8, 11, 2) == true);
+}
+
+static uint32_t ble_timestamp_get(uint8_t *buf, uint32_t start, uint32_t buf_size)
+{
+    uint32_t time = 0;
+    uint32_t remaining;
+    uint8_t *p = (uint8_t*)&time;
+    if (start >= buf_size) {
+        start -= buf_size;
+    }
+
+    remaining = buf_size - start;
+    if(remaining >= 4) {
+        return (*((uint32_t*)(buf+start)));
+    } else {
+        memcpy(p, buf+start, remaining);
+        p += remaining;
+        memcpy(p, buf, 4-remaining);
+        return time;
+    }
 }
