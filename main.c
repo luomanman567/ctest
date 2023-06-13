@@ -34,7 +34,7 @@ typedef struct entry2
 
 int main()
 {
-    int8_t flag = 1;
+    int8_t flag = 0;
     uint8_t idx;
     for(int i = 0; i < 8; i++)
     {
