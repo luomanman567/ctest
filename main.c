@@ -12,14 +12,6 @@ uint32_t buf_copy(uint8_t *buf, uint32_t buf_size, uint8_t *src, uint8_t len, ui
 void test_buf_copy(void);
 uint8_t checksum(const uint8_t *buf, uint32_t buf_size, uint32_t out);
 
-// int main()
-// {
-//     uint8_t idx;
-//     uint8_t buf[4] = {0x12, 0x34, 0x56, 0x78};
-//     for (int i = 0; i < 4; i++) {
-//         printf("buf + %d = %p, *(buf + %d) = %02x\n", i, buf + i, i, *(buf + i));
-//     }
-// }
 
 int main()
 {
@@ -114,11 +106,6 @@ buf_copy(uint8_t *buf, uint32_t buf_size, uint8_t *src, uint8_t len, uint32_t in
     return (in + len) % buf_size;
 }
 
-void
-test_buf_copy(void)
-{
-
-}
 
 
 uint8_t 
