@@ -47,9 +47,11 @@ int main()
     //     printf("flag, idx: %d %d\n", flag, idx);
     //     flag = flag << 1;
     // }
-    char* str="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+
+    char* str="AAAAAAAAAAAAAAAAAAAAAAAAAA";
     vulfunc(str);
     return;
+    
 }
 
 bool 
