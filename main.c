@@ -15,11 +15,6 @@ uint32_t buf_copy(uint8_t *buf, uint32_t buf_size, uint8_t *src, uint8_t len, ui
 void test_buf_copy(void);
 uint8_t checksum(const uint8_t *buf, uint32_t buf_size, uint32_t out);
 
-void vulfunc(char* str){
-    char src[10];
-    strcpy(src,str);
-}
-
 typedef struct entry1
 {
     uint8_t len;
@@ -39,19 +34,14 @@ typedef struct entry2
 
 int main()
 {
-    // int8_t flag = 1;
-    // uint8_t idx;
-    // for(int i = 0; i < 8; i++)
-    // {
-    //     idx = flag & (-flag);
-    //     printf("flag, idx: %d %d\n", flag, idx);
-    //     flag = flag << 1;
-    // }
-
-    char* str="AAAAAAAAAAAAAAAAAAAAAAAAAA";
-    vulfunc(str);
-    return;
-    
+    int8_t flag = 1;
+    uint8_t idx;
+    for(int i = 0; i < 100; i++)
+    {
+        idx = flag & (-flag);
+        printf("flag, idx: %d %d\n", flag, idx);
+        flag = flag << 1;
+    }
 }
 
 bool 
