@@ -31,17 +31,24 @@ typedef struct entry2
     uint8_t len;
 } entry2_t;
 
+void vulfunc(char* str){
+    char src[10];
+    strcpy(src,str);
+}
 
 int main()
 {
-    int8_t flag = 1;
-    uint8_t idx;
-    for(int i = 0; i < 100; i++)
-    {
-        idx = flag & (-flag);
-        printf("flag, idx: %d %d\n", flag, idx);
-        flag = flag << 1;
-    }
+    // int8_t flag = 1;
+    // uint8_t idx;
+    // for(int i = 0; i < 100; i++)
+    // {
+    //     idx = flag & (-flag);
+    //     printf("flag, idx: %d %d\n", flag, idx);
+    //     flag = flag << 1;
+    // }
+    char* str="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    vulfunc(str);
+    return;
 }
 
 bool 
