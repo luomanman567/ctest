@@ -52,7 +52,7 @@ int main()
 =======
     int8_t flag = 1;
     uint8_t idx;
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 100; i++)
     {
         idx = flag & (-flag);
         printf("flag, idx: %d %d\n", flag, idx);
