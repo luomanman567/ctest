@@ -34,21 +34,21 @@ typedef struct entry2
 
 int main()
 {
-    // int8_t flag = 1;
-    // uint8_t idx;
-    // for(int i = 0; i < 7; i++)
-    // {
-    //     idx = flag & (-flag);
-    //     printf("flag, idx: %d %d\n", flag, idx);
-    //     flag = flag << 1;
-    // }
-
-    uint8_t *buf;
-    uint32_t malloc_size;
-    buf = (uint8_t*)malloc(1000);
-    for (int i = 0; i < 5; i++) {
-        printf("buf[%u] =  %02x\n", buf - i, (uint8_t)((uint8_t*)(buf-i)));
+    int8_t flag = 1;
+    uint8_t idx;
+    for(int i = 0; i < 3000; i++)
+    {
+        idx = flag & (-flag);
+        printf("flag, idx: %d %d\n", flag, idx);
+        flag = flag << 1;
     }
+
+    // uint8_t *buf;
+    // uint32_t malloc_size;
+    // buf = (uint8_t*)malloc(1000);
+    // for (int i = 0; i < 5; i++) {
+    //     printf("buf[%u] =  %02x\n", buf - i, (uint8_t)((uint8_t*)(buf-i)));
+    // }
     //printf("malloc_size = %u \n", (uint32_t)((uint16_t*)(buf - 4)));
 }
 
