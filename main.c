@@ -36,7 +36,7 @@ int main()
 {
     int8_t flag = 1;
     uint8_t idx;
-    for(int i = 0; i < 1000; i++)
+    for(int i = 0; i < 2000; i++)
     {
         idx = flag & (-flag);
         printf("flag, idx: %d %d\n", flag, idx);
